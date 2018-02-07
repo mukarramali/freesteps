@@ -2,7 +2,17 @@
 require "config.php";
 
 function create($array){
-  return "insert into ".VEHICLE_TABLE."(".VEHICLE_ID.", ".PHONE.", ".LATITUDE.", ".LONGITUDE.", ".BEARINGS.") values(".$array[VEHICLE_ID].", ".$array[PHONE].", ".$array[LATITUDE].", ".$array[LONGITUDE].", ".$array[BEARINGS].")";
+
+  return "insert into ".VEHICLE_TABLE."(".VEHICLE_ID.", ".PHONE.", ".LATITUDE.", ".LONGITUDE.", ".BEARINGS.") values(".newVehicleId().", ".$array[PHONE].", ".$array[LATITUDE].", ".$array[LONGITUDE].", ".$array[BEARINGS].")";
+}
+
+function newVehicleId(){
+  $result = mysqli_query("SELECT MAX(".VEHICLE_ID.") FROM ".VEHICLE_TABLE);
+  $row = mysqli_fetch_row($result);
+  if($row == 0)
+    return 1;
+  else
+    return $row[0] + 1;
 }
 
 function update($array){
@@ -10,11 +20,9 @@ function update($array){
 }
 
 
-if(isset($_POST[VEHICLE_ID]) && isset($_POST[PHONE]) && isset($_POST[LATITUDE]) && isset($_POST[LONGITUDE]) && isset($_POST[BEARINGS]))
+if(isset($_POST[PHONE]) && isset($_POST[LATITUDE]) && isset($_POST[LONGITUDE]) && isset($_POST[BEARINGS]))
 {
-  $query = "select * from ".VEHICLE_TABLE." where ".VEHICLE_ID."=".$_POST[VEHICLE_ID];
-  $qry_result = mysqli_query($conn, $query) or failed();
-  if(mysqli_fetch_array($qry_result) == 0)
+  if(!isset($_POST[VEHICLE_ID]))
     $query = create($_POST);
   else
     $query = update($_POST);

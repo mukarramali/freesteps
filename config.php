@@ -20,11 +20,11 @@
   if(empty($result)) {
     $query = "CREATE TABLE ".VEHICLE_TABLE." (
               ".ID." int(11) AUTO_INCREMENT,
-              ".VEHICLE_ID." varchar(255) NOT NULL,
-              ".LATITUDE." varchar(255) NOT NULL,
-              ".LONGITUDE." int,
-              ".BEARINGS." int,
-              ".PHONE." int,
+              ".VEHICLE_ID." varchar(20) NOT NULL,
+              ".LATITUDE." decimal,
+              ".LONGITUDE." decimal,
+              ".BEARINGS." decimal,
+              ".PHONE." varchar(20) NOT NULL,
               ".PRIMARY." KEY  (ID)
               )";
     $result = mysqli_query($conn, $query);
