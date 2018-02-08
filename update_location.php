@@ -1,10 +1,6 @@
 <?php
 require "config.php";
 
-function create($array, $conn){
-  return "insert into ".VEHICLE_TABLE."(".VEHICLE_ID.", ".PHONE.", ".LATITUDE.", ".LONGITUDE.", ".BEARINGS.") values(".newVehicleId($conn).", ".$array[PHONE].", ".$array[LATITUDE].", ".$array[LONGITUDE].", ".$array[BEARINGS].")";
-}
-
 function newVehicleId($conn){
   $result = mysqli_query($conn, "SELECT MAX(".VEHICLE_ID.") FROM ".VEHICLE_TABLE);
   $row = mysqli_fetch_row($result);
@@ -14,8 +10,13 @@ function newVehicleId($conn){
     return $row[0] + 1;
 }
 
-function present(phone){
-  $result = mysqli_query("SELECT * FROM ".VEHICLE_TABLE." where ".PHONE."='".phone."'");
+function create($array, $conn){
+  return "insert into ".VEHICLE_TABLE."(".VEHICLE_ID.", ".PHONE.", ".LATITUDE.", ".LONGITUDE.", ".BEARINGS.") values(".newVehicleId($conn).", ".$array[PHONE].", ".$array[LATITUDE].", ".$array[LONGITUDE].", ".$array[BEARINGS].")";
+}
+
+
+function present($phone){
+  $result = mysqli_query("SELECT * FROM ".VEHICLE_TABLE." where ".PHONE."='".$phone."'");
   $row = mysqli_fetch_row($result);
   if($row == 0)
     return false;
