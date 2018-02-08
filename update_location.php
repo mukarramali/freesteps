@@ -1,11 +1,11 @@
 <?php
 require "config.php";
 
-function create($array){
-  return "insert into ".VEHICLE_TABLE."(".VEHICLE_ID.", ".PHONE.", ".LATITUDE.", ".LONGITUDE.", ".BEARINGS.") values(".newVehicleId().", ".$array[PHONE].", ".$array[LATITUDE].", ".$array[LONGITUDE].", ".$array[BEARINGS].")";
+function create($array, $conn){
+  return "insert into ".VEHICLE_TABLE."(".VEHICLE_ID.", ".PHONE.", ".LATITUDE.", ".LONGITUDE.", ".BEARINGS.") values(".newVehicleId($conn).", ".$array[PHONE].", ".$array[LATITUDE].", ".$array[LONGITUDE].", ".$array[BEARINGS].")";
 }
 
-function newVehicleId(){
+function newVehicleId($conn){
   $result = mysqli_query($conn, "SELECT MAX(".VEHICLE_ID.") FROM ".VEHICLE_TABLE);
   $row = mysqli_fetch_row($result);
   if($row == 0)
@@ -31,7 +31,7 @@ function update($array){
 if(isset($_POST[PHONE]) && isset($_POST[LATITUDE]) && isset($_POST[LONGITUDE]) && isset($_POST[BEARINGS]))
 {
   if(!isset($_POST[VEHICLE_ID]))
-    $query = create($_POST);
+    $query = create($_POST, $conn);
   else
     $query = update($_POST); 
   if(mysqli_query($conn, $query))
