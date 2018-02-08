@@ -6,7 +6,7 @@ function create($array){
 }
 
 function newVehicleId(){
-  $result = mysqli_query("SELECT MAX(".VEHICLE_ID.") FROM ".VEHICLE_TABLE);
+  $result = mysqli_query($conn, "SELECT MAX(".VEHICLE_ID.") FROM ".VEHICLE_TABLE);
   $row = mysqli_fetch_row($result);
   if($row == 0)
     return 1;
