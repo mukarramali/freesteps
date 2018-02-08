@@ -25,12 +25,13 @@ if(isset($_POST[PHONE]) && isset($_POST[LATITUDE]) && isset($_POST[LONGITUDE]) &
   if(!isset($_POST[VEHICLE_ID]))
     $query = create($_POST);
   else
-    $query = update($_POST);
+    $query = update($_POST); 
   if(mysqli_query($conn, $query))
     echo "{\"status\": true}";
-  else
+  else{
+    echo $query;
     failed();
-
+  }
 }
 else failed();
 

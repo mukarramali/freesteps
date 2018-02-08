@@ -31,6 +31,11 @@
     echo "Table created!";
   }
 
+
+    // $query = "select count(*) vehicles";
+    // $result = mysqli_query($conn, $query);
+    // echo json_encode(mysqli_fetch_row($result));
+
   function failed(){
     die("{\"status\": false}");
   }
