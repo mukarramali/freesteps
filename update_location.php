@@ -2,7 +2,6 @@
 require "config.php";
 
 function create($array){
-
   return "insert into ".VEHICLE_TABLE."(".VEHICLE_ID.", ".PHONE.", ".LATITUDE.", ".LONGITUDE.", ".BEARINGS.") values(".newVehicleId().", ".$array[PHONE].", ".$array[LATITUDE].", ".$array[LONGITUDE].", ".$array[BEARINGS].")";
 }
 
@@ -13,6 +12,15 @@ function newVehicleId(){
     return 1;
   else
     return $row[0] + 1;
+}
+
+function present(phone){
+  $result = mysqli_query("SELECT * FROM ".VEHICLE_TABLE." where ".PHONE."='".phone."'");
+  $row = mysqli_fetch_row($result);
+  if($row == 0)
+    return false;
+  else
+    return true;
 }
 
 function update($array){
